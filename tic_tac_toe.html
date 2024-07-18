@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    <style>
+      body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(45deg, #ff8080, #8c30f0);
+  }
+  
+  .game-container {
+    text-align: center;
+  }
+  
+  .board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  
+  .cell {
+    width: 100px;
+    height: 100px;
+    background: #eee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .result {
+    display: none;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .message {
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
+  
+  .new-game-button {
+    background: #8c30f0;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+  }
+  
+    </style>
+  </head>
+  <body>
+    
+    <div class="game-container">
+      <h1>Tic-Tac-Toe</h1>
+      <div class="board" id="board">
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+      </div>
+    </div>
+    <div class="result" id="result">
+      <div class="message" id="message">
+        <p></p>
+      </div>
+      <script>
+      const cells = document.querySelectorAll('[data-cell]');
+const result = document.getElementById('result');
+const message = document.getElementById('message');
+const newGameButton = document.getElementById('new-game-button');
+const board = document.getElementById('board');
+
+let currentPlayer = 'X';
+let gameOver = false;
+
+const winningCombinations = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6],
+];
+
+function checkWinner() {
+  for (const combination of winningCombinations) {
+    const [a, b, c] = combination;
+    if (cells[a].textContent && cells[a].textContent === cells[b].textContent && cells[a].textContent === cells[c].textContent) {
+      gameOver = true;
+      message.textContent = `${currentPlayer} wins!`;
+      result.style.display = 'flex';
+      return;
+    }
+  }
+
+  if ([...cells].every((cell) => cell.textContent !== '')) {
+    gameOver = true;
+    message.textContent = 'It\'s a draw!';
+    result.style.display = 'flex';
+  }
+}
+
+function handleCellClick(e) {
+  const cell = e.target;
+  if (gameOver || cell.textContent !== '') return;
+
+  cell.textContent = currentPlayer;
+  cell.style.background = currentPlayer === 'X' ? '#ff8080' : '#8c30f0';
+
+  checkWinner();
+  currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+}
+
+function startNewGame() {
+  cells.forEach((cell) => {
+    cell.textContent = '';
+    cell.style.background = '#eee';
+  });
+  result.style.display = 'none';
+  currentPlayer = 'X';
+  gameOver = false;
+}
+
+cells.forEach((cell) => {
+  cell.addEventListener('click', handleCellClick);
+});
+
+newGameButton.addEventListener('click', startNewGame);
+
+    
+</script>
+   
+  </body>
+</html>
