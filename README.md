@@ -3,13 +3,12 @@
 This is a simple Tic-Tac-Toe game built using HTML, CSS, and JavaScript. The game is played between two players, one using 'X' and the other using 'O', taking turns on a 3x3 grid. The first player to align three symbols either horizontally, vertically, or diagonally wins the game. The game also supports draws.
 
 ## Features
-2 Player Mode: Play against another player on the same device.
+2 Player Mode: Play against computer .
 
 Game Result: Displays the winner or a draw result.
 
 Responsive Design: The game works well on different screen sizes.
 
-New Game Option: Restart the game at any point with the click of a button.
 
 ## Technologies Used
 
